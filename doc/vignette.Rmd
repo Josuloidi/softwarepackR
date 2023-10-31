@@ -1,0 +1,710 @@
+---
+title: "Documentación de softwarepack"
+author: "Josu Loidi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Resumen
+
+En este documento se ilustrará el uso de todas las funciones que he implementado en Python. Para cada función se dará una breve explicación de lo que debería hacer la función y se mostrará como lo hace. El documento se ha dividido siguiendo los distintos objetivos que se habían marcado. 
+
+```{r }
+library("softwarepack")
+```
+
+## 1. Algoritmos de discretización
+
+Empezemos viendo el funcionamiento de los algoritmos de discretización. Los algortimos de discretización toman como entrada un vector de valores numéricos y los transforman en vectores categóricos. Para esto, también toman un número de intervalos. Partiendo de los numeros de entrada y el número de intervalos, deciden cuales son los puntos de corte en el conjunto de datos. Teniendo en cuenta estos ultimos, clasifican cada número en un intervalo distinto. 
+
+Para crear estos intervalos, se utilizan distintas estrategias. Yo debía implementar dos de ellas: Equal Width y Equal Frecuency. En el Equal Width todos los rangos deben tener la misma longitud. Por ejemplo, si tenemos como entrada los puntos (11.5, 10.2, 1.2, 0.5, 5.3, 20.5, 8.4, 4.4) y como numéro de intervalos 4, los puntos de corte serán 5.5, 10.5 y 15.5. Cada intervalo tiene una longitud de 5. 
+
+En cambio, en el Equal Width, se busca que en cada intervalo haya el mismo número de valores. Por tanto, los puntos de corte los definen algunos de los números que se encuentran en la entrada. Siguiendo con el ejemplo, los puntos de corte serían 1.2, 5.3, y 10.2, manteniendo así dos elementos en cada intervalo. Es relativamente sencillo comprenderlo si ordenamos la lista: (0.5,  \textbf{1.2},  4.4,  \textbf{5.3},  8.4, \textbf{10.2}, 11.5, 20.5). En este ejemplo había elementos suficientes como para crear cuatro intervalos con la misma cantidad de números. Pero, si la cantidad de números no es múltiplo del número de intervalos esto no sucede. En estos casos, mi implementación añade más elementos a los primeros intervalos. Por ejemplo, si tenemos un vector de entrada de 10 números, la partición se haria desta manera: (0.5,  1.2,  \textbf{4.4},  5.3,  8.4, \textbf{10.2}, 11.5, \textbf{20.5}, 23.1, 80.1).
+
+Yo, a parte de estas dos estrategias, he implementado una adicional. Por lo que he leído se llama Jenks Natural Breaks. Con esta estrategia lo que se busca es que los elementos de los distintos intervalos estén lo más separados posibles. Es decir, se busca donde se dan los saltos más grandes en los numeros, y se dividen por esas partes. Volviendo al ejemplo, es sencillo ver donde estan esos saltos si de nuevo ordenamos la lista: 0.5 (+0.7)  1.2 \textbf{(+3.2)} 4.4 (+0.9)  5.3 \textbf{(+3.1)}  8.4 (+1.8) 10.2 (+1.3) 11.5 \textbf{(+9)} 20.5. Por lo tanto, teniendo en cuenta esto, los puntos de corte serían 1.2, 5.3 y 11.5.
+
+Mis funciones, devuelven dos elementos, por un lado un vector categórico. Por otro lado, la lista de los números de corte. Para probar las funciones, utilizaremos el mismo ejemplo que se ha usado en las explicaciones.
+
+```{r }
+x <- c(11.5, 10.2, 1.2, 0.5, 5.3, 20.5, 8.4, 4.4)
+num.bins <- 4
+```
+
+Primero, vamos a probar la función que utiliza la estrategia Equal Width.
+
+```{r }
+res <- discretizeEW(x,num.bins)
+res
+```
+
+Como vemos, los puntos de corte coinciden con los mencionados en la explicación. Por otro lado, cada valor se encuentra en su debido intervalo. Podemos contar cuantos números hay en cada intervalo, y nos damos cuenta de que no tiene por qué haber un mismo número de elementos en cada uno.  
+
+```{r }
+table(res$x.discretized)
+```
+
+De hecho, puede ocurrir que en algun intervalo no haya ningun elemento. Como podemos ver en el siguiente ejemplo.
+
+```{r }
+y <- c(9.5, 10.2, 1.2, 0.5, 5.3, 20.5, 8.4, 4.4)
+res <- discretizeEW(y,num.bins)
+table(res$x.discretized)
+```
+
+Veamos ahora como funciona la función que utiliza la estrategia Equal Frecuency.
+
+```{r }
+res <- discretizeEF(x,num.bins)
+res
+```
+
+De nuevo, los puntos de corte coinciden con los mencionados en la explicación. Por otro lado, cada valor se encuentra en su debido intervalo. Podemos contar cuantos números hay en cada intervalo, y nos damos cuenta de que en cada intervalo hay exactamente dos elementos.  
+
+```{r }
+table(res$x.discretized)
+```
+
+Si añadimos dos números más al vector de entrada, veremos que en los primeros intervalos tendremos un elemento más. 
+
+```{r }
+y <- c(0.5, 1.2, 4.4, 5.3, 8.4, 10.2, 11.5, 20.5, 23.1, 80.1)
+res <- discretizeEF(y,num.bins)
+table(res$x.discretized)
+```
+
+Por último, tenemos la función que aplica el Jenks Natural Breaks. 
+
+```{r }
+res <- discretizeJNB(x,num.bins)
+res
+```
+
+Como he mencionado anteriormente, los puntos de corte coinciden con los puntos en los que se dan los mayores saltos: 1.2, 5.3 y 11.5. En este caso, como en EW, también es posible encontrar intervalos con distinta cantidad de individuos.
+
+```{r }
+table(res$x.discretized)
+```
+
+Las funciones mostradas hasta ahora, sirven para discretizar un único vector. Pero también he creado una función que discretiza múltiples vectores: discretizarColumnas(df, numBins, discretizacion = "TODAS"). Esta función toma como entrada un dataFrame, y aplica a todas las columnas la discretización mencionada (\textit{EW}, \textit{EF}, \textit{JNB} o \textit{TODAS}). Por defecto hace todas las discretizaciones. Hace lo mismo si se le ha pasado un valor erroneo de discretización. 
+
+Para poder probar esta función, definiremos un dataFrame.
+
+```{r }
+n <- 10
+df <- data.frame(x = round(runif(n)*100),
+                y = round(runif(n)*100),
+                z = round(runif(n)*100))
+num.bins <- 4
+df
+```
+
+Teniendo este dataFrame, le aplicaremos EW a todas las columnas.
+
+```{r }
+discretizarColumnas(df,num.bins,"EW")
+```
+
+También podemos aplicar la estrategia EF.
+
+```{r }
+discretizarColumnas(df,num.bins,"EF")
+```
+
+Incluso podemos utilizar la estrategia JNB
+
+```{r }
+discretizarColumnas(df,num.bins,"EF")
+```
+
+Por último, aplicaremos todas las discretizaciones con una única llamada a la función.
+
+```{r }
+discretizarColumnas(df,num.bins)
+```
+
+Como se puede apreciar en esta última ejecución, al aplicar todas las estrategias, se mantiene la variable principal y por cada discretización se añade una columna más.
+
+## 2. Cálculo de métricas para los atributos de un dataset
+
+En este caso, se pedía una función que tomara como entrada un dataFrame que contuviera variables continuas y discretas. Para las variables continuas, la función debería calcular la varianza y el AUC. Esta segunda métrica implica que las variables continuas vayan acompañadas de una variable booleana. Para las variables discretas, la funcion deberia calcular la entropía. Analizemos una a una estas métricas.
+
+Como bien conocemos, la formula de la varianza es la siguiente:
+
+\begin{center}
+$ s^{2} = \sum_{i=1}^{n}(x_{i} - \mu)^{2} $
+\end{center}
+
+He creado una función que como entrada tome un vector y compute esos calculos. Probemos dicha función: 
+
+```{r }
+x <- round(runif(n)*100)
+calculoVarianza(x)
+```
+
+Como vemos, da el mismo resultado que la funcion var de R.
+
+```{r }
+x <- round(runif(n)*100)
+var(x)
+```
+
+Por otro lado, tenemos la funcion de la metrica AUC. Toma como entrada un dataFrame con una variable numérica y una booleana. Primero de todo, calcula la curva ROC que le pertenece a la variable. Una vez hecho eso, calcula el area bajo dicha curva. Esta area debe tener un valor del rango [0,1]. A continuación crearemos un dataFrame para probar dicha función.
+
+```{r }
+n <- 20
+df <- data.frame(x = sample(1:100, 20),
+                 y = sample(c(TRUE, FALSE), 20, replace = TRUE))
+df
+```
+
+Ahora el cálculo de AUC.
+
+```{r }
+calculoAUC(df)
+```
+
+Ejecutándolo con distintas entradas obtenemos siempre un valor entre 0 y 1.
+
+Por último, esta la funcion de la entropia. La fórmula de dicha metrica es la siguiente:
+
+\begin{center}
+$
+H(X) = \sum_{i=1}^{n}(-p_{i}log_{2}(p_{i}))^{2} 
+$
+\end{center}
+
+Sabiendo esto, he implementado una función que hace dichos cálculos. Si tomamos el ejemplo del enunciado (a, a, c, c, c), la entropia debería dar lo siguiente: $-0.4log2(0.4) - 0.6log2(0.6) = 0.971$.
+
+```{r }
+x.discretized <- factor(c("a", "c", "c", "a", "c"), levels = c("a", "b", "c"))
+entropy(x.discretized)
+```
+
+Como vemos, hace bien el cálculo.
+
+Por lo tanto, tengo tres funciones que calculan las tres métricas. Pero no olvidemos que el objetivo principal era calcular las tres métricas para un data frame completo. A la función que hace dichos calculos le he llamado calculoMetricas. A este, se le pasa un dataFrame que contiene variables numéricas y discretas. Las variables numericas deben ir acompañadas por una booleana. Si no es así saltará un error. Para cada variable calcula las respectivas metricas. Crearemos un dataFrame para probar la función.
+
+```{r }
+n <- 15
+df <- data.frame( a = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  b = sample(1:100, n),
+                  c = sample(c(TRUE, FALSE), n, replace = TRUE),
+                  d = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  e = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  f = sample(1:100, n),
+                  g = sample(c(TRUE, FALSE), n, replace = TRUE))
+df
+```
+
+Ahora, veremos la ejecución de la función.
+
+
+```{r }
+calculoMetricas(df)
+```
+
+En el ejemplo tenemos dos variables númericas y tres discretas. Como vemos en la salida de la función, para las numéricas, hemos logrado dos valores. Que son, la varianza y el AUC respectivamente. Para las variables discretas, conseguimos un único valor (la entropía). 
+
+Como he mencionado antes, si a una variable numérica no le pasamos el vector booleano obtendremos un error.
+
+```{r }
+df <- data.frame( a = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  b = sample(1:100, n),
+                  d = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  e = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  f = sample(1:100, n),
+                  g = sample(c(TRUE, FALSE), n, replace = TRUE))
+tryCatch({
+  calculoMetricas(df)
+}, error = function(e) {
+  print(conditionMessage(e))
+})
+```
+
+Ocurrirá lo mismo si ponemos una columna booleana sin su variable numérica.
+
+```{r }
+df <- data.frame( a = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  c = sample(c(TRUE, FALSE), n, replace = TRUE),
+                  d = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  e = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  f = sample(1:100, n),
+                  g = sample(c(TRUE, FALSE), n, replace = TRUE))
+tryCatch({
+  calculoMetricas(df)
+}, error = function(e) {
+  print(conditionMessage(e))
+})
+```
+
+## 3. Normalización y estandarización
+
+El siguiente apartado consistía en que tenía que implementar funciones de normalización y estandarización de variables, tanto de manera individual como para un dataframe completo. Cabe destacar que las variables deben ser numéricas.
+
+Normalizar los datos consiste en pasar todos los datos al rango [0,1]. Para conseguir esto, se consiguen el valor mínimo y máximo que toma la variable. Una vez conseguidos, se restan todos los valores por el minimo, y se les divide la diferencia entre el mínimo y el maximo. Es decir, se computan estos calculos:
+
+\begin{center}
+$\frac{x - min(x)}{max(x) - min(x)}$
+\end{center}
+
+De esta manera, se consigue que todos los valores esten entre 1 y 0, siendo 1 el valor máximo y 0 el mínimo. Para calcular esto, tengo la función que le he llamado normalizar.
+
+```{r }
+n <- 20
+x <- sample(1:100, n)
+x_norm <- normalizar(x)
+x_norm
+```
+
+Como vemos, todos los números toman valores de entre 0 y 1. Y como he afirmado anteriormente, el máximo es 1 y el mínimo 0.
+
+```{r }
+cat("Mínimo: ", min(x_norm))
+cat("Máximo: ", max(x_norm))
+```
+
+En cambio, al estandarizar los datos, se consigue que los datos tengan media 0 y desviación estandar de 1. Para ello, los valores se restan por la media de los datos y se dividen por la desviación estandar. Es decir:
+
+\begin{center}
+$\frac{x - mean(x)}{sd(x)}$
+\end{center}
+
+La función que hace dichos cálculos es \textit{estandarizar}.
+
+```{r }
+x_est <- estandarizar(x)
+x_est
+```
+
+Para comprobar que se han hecho bien los calculos, visualicemos la media y la desviación estandar de los nuevos datos. Como se ha mencionado anteriormente, dichos valores deben ser 0 y 1 respectivamente.
+
+```{r }
+cat("Media: ", round(mean(x_est),2))
+cat("Desviación estandar: ", round(sd(x_est),2))
+```
+
+A parte de estas dos funciones, he implementado otras dos que hacen uso de estas primeras, que sirven para normalizar y estandarizar un dataFrame completo. Dichas funciones, toman como entrada un dataFrame de variables numericas y la normalizan o estandarizan por columnas.
+
+Para ello, creemos un dataFrame con cuatro variables.
+
+```{r }
+n <- 10
+df <- data.frame( x = sample(1:100, n),
+                  y = sample(1:100, n),
+                  z = sample(1:100, n),
+                  t = sample(1:100, n))
+df
+```
+
+Ahora normalizemos el dataFrame completo.
+
+```{r }
+dfnorm <- normalizarDF(df)
+dfnorm
+```
+
+Como es de esperar, en cada columna el máximo es 1 y el mínimo 0.
+
+```{r }
+cat("Mínimos: \n", apply(dfnorm, MARGIN = 2, min),2)
+cat("Máximos: \n", apply(dfnorm, MARGIN = 2, max),2)
+```
+
+Ahora estandarizemos el dataFrame completo.
+
+```{r }
+dfest <- estandarizarDF(df)
+dfest
+```
+
+Como es de esperar, en cada columna la media es 0 y la desviación estandar 1.
+
+```{r }
+cat("Medias: \n", round(apply(dfest, MARGIN = 2, mean),2))
+cat("Desviaciones estandar: \n", round(apply(dfest, MARGIN = 2, sd),2))
+```
+
+## 4. Filtrado de variables
+
+A continuación, se nos planteaba crear una funcion para hacer filtrado de variables en base a las métricas implementadas. Es decir, partiendo de un dataset, obtener uno nuevo donde todas las variables cumplan los requisitos indicados (por ejemplo, una entropía superior a un cierto umbral). La interpretación de este problema es vastante abierta, se puede llegar a distintas conclusiones. Es por ello por lo que voy a explicar bien qué es lo que he querido hacer con mi función.
+
+Mi función permite filtrar las variables por la varianza, el AUC y la entropia. Por cada métrica se puede crear una condición. Dicha condicion tiene este formato: MÉTRICA OPERADOR X. Donde MÉTRICA puede ser cualquiera de las tres métricas, OPERADOR puede ser menor ($<$, \textit{LO}), mayor ($>$, \textit{HI}) o igual ($=$, \textit{EQ}) y X es un valor numérico.   
+
+Como entrada, puede tomar variables númericas y discretas. Las variables numéricas, pueden ir seguidar por una variable booleana, pero no es obligatorio. Eso sí, una variable lógica no puede ir despues de una variable discreta.
+
+Supongamos que se le pasa a la funcion la condicion Entropia < 0.9. En este caso, en el dataFrame de entrada solo se mirarán las variables discretas. Las otras (numéricas y booleanas) pasarán el filtro. Es decir, se mantendrán en el dataFrame de salida. En cuanto a las variables discretas, se calculará la entropia para cada una de ellas y aquellas que tengan una entropia superior o igual a 0.9 serán descartadas. Por lo tanto en la salida, estarán las variables numéricas y booleanas y las discretas que tengan una entropia menor a 0.9.
+
+Ahora supongamos que la condición es AUC < 0.5. En este caso, en el dataFrame de entrada solo se mirarán las variables númericas que van acompañadas de una variable booleana. Las variables discretas y las numéricas que no tengan booleana pasarán el filtro. En cuanto a las variables continuas con booleana, se calculara la entropia y aquellas que tengan una entropia superior o igual a 0.5 se descartarán. Se descartará la variable numérica incluso la booleana.
+
+Por último, supongamos que se da la condición varianza < 200. En este caso, se mirarán todas las variables numéricas. Las discretas pasarán el filtro. Se calculará la varianza para cada variable y aquellas que no superan 200 serán eliminados. En el caso de las variables que contengan la variable booleana, la variable booleana tambien se descartará.
+
+En el caso de que se pasen más de una condición (una para cada métrica), se ejecutarán todas en cadena.
+
+Una vez explicado su comportamiento, veamos como funciona en la práctica. Para ello definiremos un dataFrame con tres variables numéricas (dos de ellas con booleana) y tres categóricas.
+
+```{r }
+set.seed(50)
+n <- 20
+df <- data.frame(a.x = sample(1:100, n, replace = TRUE),
+                 a.y = sample(c(TRUE, FALSE), n, replace = TRUE),
+                 b = sample(c("a", "b", "c", "d"), n, replace = TRUE),
+                 c.x = sample(1:50, n, replace = TRUE),
+                 c.y = sample(c(TRUE, FALSE), n, replace = TRUE),
+                 d = sample(c("a", "b", "c"), n, replace = TRUE),
+                 e = sample(c("a", "b"), n, replace = TRUE),
+                 f = sample(50:100, n, replace = TRUE))
+df
+```
+
+Empecemos por filtrar las variables discretas por su entropía. Mantendremos las variables que tengan una entropía menor a 1.6.
+
+```{r }
+filtrar(df, ent = TRUE, entUmbr = 1.6, entOP = "LO")
+```
+
+Al ejecutar la función se nos han mostrado las distintas entropias. Como vemos, el único que no cumplía el requisito era la variable `b`, por lo que se ha quitado. Tambien hay que remarcar, que como se ha dicho, las variables numéricas se han mantenido.
+
+Ahora filtraremos las variables numéricas por el valor AUC. Tenemos dos variables numéricas con una variable booleana. Por lo tanto solo se mirarán estas dos. Se pedirá que el valor AUC sea mayor a 0.4.
+
+```{r }
+filtrar(df, AUC = TRUE, AUCUmbr = 0.4, AUCOP = "HI")
+```
+
+De la misma manera que en la anterior ejecución, se nos han mostrado los valores AUC conseguidos. Vemos claramente que la variable `c` no cumplía la condición. Por tanto se ha eliminado (incluida la variable booleana). La variable `a` y todas las demás se han mantenido.
+
+A continuacion filtraremos las variables numéricas por la varianza. Solo mantendremos las variables numéricas que contengan una varianza menor a 210.
+
+```{r }
+filtrar(df, varianza = TRUE, varUmbr = 210, varOP = "LO")
+```
+Mirando las varianzas calculadas, vemos que la única variable numérica que cumple la condición deseada es `a`. Por consiguiente, se han eliminado la variable `a` y su variable booleana y la variable `f`.
+
+Aunque hasta ahora hayamos insertado una única condición en cada llamada a la función. Es posible pasar las tres condiciones a la vez. 
+
+```{r }
+filtrar(df, ent = TRUE, entUmbr = 1.6, entOP = "LO",
+        AUC = TRUE, AUCUmbr = 0.4, AUCOP = "HI",
+        varianza = TRUE, varUmbr = 210, varOP = "LO")
+```
+
+Aplicando los tres filtros, las únicas variables que sobreviven son `d` y `e`. Ya que, la primera condición nos quita `b`, la segunda `c` y la tercera `a` y `f`.  
+
+## 5. Cálculo de la correlación
+
+En este problema, se nos pedía crear una función que calculara la correlación por pares entre variables de un dataset. En el caso de que las varaibles fueran categóricas en vez de la correlación, se debía calcular la información mutua. La función debía considerar de que tipo era cada variable. Sabiendo esto, me he preguntado si el dataFrame puede tener o no variables de distintos tipos. Es decir, ¿puede tener variables categóricas y númericas?. O, ¿debe tener todas las variables categóricas o todas numéricas?. He supuesto que puede haber distintas. Por lo tanto, ¿qué calculos hago?. Cuando las dos variables son numéricas, calculo la correlación. Cuando las dos son categóricas, calculo la información mutua. Y cuando una es numérica y otra categórica calculo también la información mutua. Aunque sé que esto último no tiene mucho sentido, me parecía más interesante implementar una función que dejara utilizar variables de dos tipos y no limitarme a un único tipo.
+
+Sabiendo esto, primero de todo, he implementado una funcion que sirve para calcular la correlación y la información mutua. Analicemos primero el cálculo de correlación. Dicha función, en caso de que las dos variables sean numéricas, computa la siguiente formula:
+
+\begin{center}
+$r(x,y) = \frac{\sum_{i=1}^{n}(x_{i} - \bar{x})(y_{i} - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2} (y_{i} - \bar{y})^{2}}}$
+\end{center}
+
+Aquí muestro una ejecución de dicha función.
+
+```{r }
+n <- 20
+x <- sample(1:200, n, replace = TRUE)
+y <- sample(1:200, n, replace = TRUE)
+correlacion(x,y)
+```
+
+Como se puede observar, devuelve el mismo valor que la función de R.
+
+```{r }
+cor(x,y)
+```
+
+En cambio, la formula de la información mutua es la siguiente:
+
+\begin{center}
+$I(x;y)=H(x)+H(y)-H(x,y)$
+\end{center}
+
+Donde H(x) es la entropía de x y H(x,y) es la entropía conjunta de las variables x e y. Por lo que esta función utiliza la función \textit{entropia} (anteriormente mencionada). Si le llamamos a la función anterior con dos variables discretas, nos calcula la información mutua.
+
+```{r }
+n <- 20
+x <- sample(c("a", "b", "c"), n, replace = TRUE)
+y <- sample(c("a", "b", "c"), n, replace = TRUE)
+correlacion(x,y)
+```
+
+Una vez conocida esta función analicemos la ejecucion de la función que calcula la correlación para un dataFrame completo. Primero, definiremos un dataFrame que contenga solo variables numéricas.
+
+
+```{r }
+n <- 100
+df <- data.frame(a = sample(1:500, n, replace = TRUE),
+                 b = 1:n,
+                 c = sample(1:500, n, replace = TRUE),
+                 d = seq(1, 1000, 1000/n))
+correlacionDF(df)
+```
+
+Se puede observar que devuelve el mismo resultado que la funcion \textit{cor} implementada en R.
+
+```{r }
+cor(df)
+```
+
+Como salida, obtenemos una matriz (dataFrame) que contiene todas las correlaciones entre variables. Como era de esperar, en la diagonal obtenemos valores iguales a 1. Ya que una variable tiene una correlacion de 1 consigo misma. Todos los valores, se encuentran en [-1,1].
+
+También podemos utilizar solo variables categóricas.
+
+```{r }
+df <- data.frame(a= sample(c("a", "b", "c", "d"), n, replace = TRUE),
+                 b = sample(c("e", "f", "g", "h"), n, replace = TRUE),
+                 c = sample(c("a", "b", "c", "d"), n, replace = TRUE),
+                 d = sample(c("e", "f", "g", "h"), n, replace = TRUE))
+correlacionDF(df)
+```
+
+En este caso, los valores de la diagonal no tienen valor 1. Los valores que vemos ahí son las entropias de las distintas variables.
+
+Por último, podemos mezclar dos tipos de variables.
+
+```{r }
+df <- data.frame(a = sample(1:50, n, replace = TRUE),
+                 b = sample(c("a", "b", "c", "d"), 100, replace = TRUE),
+                 c = sample(1:50, n, replace = TRUE),
+                 d = sample(c("e", "f", "g", "h"), 100, replace = TRUE))
+correlacionDF(df)
+```
+
+En el caso de las variables numéricas vemos un 1 en la diagonal, ya que se calcula la correlación. En las otras, la entropia, ya que se calcula la información mutua. En todos los valores restantes, vemos un valor de correlación si las dos variables son numéricas y información mutua en caso contrario.  
+
+## 6. Visualización de datos
+
+```{r }
+library("ggplot2")
+library("reshape2")
+```
+
+Para terminar con la entrega básica, tenía que implementar dos funciones de visualización. Uno para la curva ROC y otro para las matrices de correlación e información mutua. A parte de estos dos, yo he implementado dos funciones extra. Uno que hace boxplots, y otro que hace un diagrama de barras. Analicemos el funcionamiento de cada una de ellas.
+
+Empezaremos con la función que dibuja la curva ROC de una variable numérica. Para esto, la función debe recivir una variable numérica y una booleana. Estos los recive en un dataFrame. Calcula la curva y hace un plot con los puntos de la curva. A continuación se muestra una ejecución.
+
+```{r }
+df <- data.frame(a = sample(1:500, 100, replace = TRUE),
+                 b = sample(c(FALSE, TRUE), 100, replace = TRUE))
+plotROC(df)
+```
+
+En el título del gráfico podemos ver el valor AUC de la curva. Si ejecutamos la celda más de una vez vemos que concuerda con la area de la curva. Cuando obtenemos valores más pequeños de AUC la curva se encuentra más abajo y viceversa.
+
+Por otro lado, tenemos la función que dibuja las matrizes de correlación. La manera más sencilla de representar gráficamente estas matrices son las `heatmap`-s. En estas se dibuja cada celda con un color. Cuanto mayor sea el valor de una celda, mayor será su intensidad del color. Por tanto, mi función, toma un dataFrame con variables numerícas y/o categoricas, calcula la matriz de correlaciones y informaciones mutua y dibuja un heatmap con ella.
+
+Aquí tenemos un ejemplo solo con variables numéricas:
+
+```{r }
+n <- 100
+df <- data.frame(a = sample(1:500, n, replace = TRUE),
+                 b = 1:n,
+                 c = sample(1:500, n, replace = TRUE),
+                 d = seq(1, 1000, 1000/n))
+plotCorrelaciones(df)
+```
+
+Aquí uno con variables categóricas:
+
+```{r}
+n <- 20
+df <- data.frame(a= sample(c("a", "b", "c"), n, replace = TRUE),
+                 b = sample(c("b", "c"), n, replace = TRUE),
+                 c = sample(c("a", "b", "c"), n, replace = TRUE),
+                 d = sample(c("b", "c"), n, replace = TRUE))
+plotCorrelaciones(df)
+```
+
+Y por último uno con variables numéricas y categóricas:
+
+```{r}
+df <- data.frame(a = sample(1:50, n, replace = TRUE),
+                 b = sample(c("a", "b", "c", "d"), n, replace = TRUE),
+                 c = sample(1:50, n, replace = TRUE),
+                 d = sample(c("e", "f", "g", "h"), n, replace = TRUE))
+plotCorrelaciones(df)
+```
+
+Estás eran las dos funciones básicas. Pero a parte de ellas, como bien he comentado, he implementado dos extras. El primero de ellos toma una matriz con variables numéricas y hace un boxplot para cada una de ellas. De esta manera, se puede observar como están distribuidas las variables que tenemos guardados en un data frame. 
+
+A continuación se muestra un ejemplo:
+
+```{r}
+n <- 100
+df <- data.frame(a = sample(1:100, n, replace = TRUE),
+                 b = sample(1:500, n, replace = TRUE),
+                 c = sample(50:150, n, replace = TRUE),
+                 d = sample(100:500, n, replace = TRUE),
+                 e = sample(50:300, n, replace = TRUE))
+plotBoxPlots(df)
+```
+
+Gracias a esta gráfica podemos ver que tenemos variables con unas distribuciones muy distintas.
+
+La segunda nueva función toma como entrada una variable numérica y la discretiza con el método indicado. Una vez discretizada, hace un diagrama de barras que muestra cuantos valores se encuentran en cada intérvalo. Para probar esta función llamaremos a la funcion tres veces con una misma variable utilizando distintas estrategias de discretización. Veremos que las salidas serán muy distintas.
+
+```{r}
+n <- 500
+x <- sample(1:2000, n)
+num.bins <- 4
+```
+
+
+Empecemos con la estrategia Equal Width.
+
+
+```{r}
+cat(num.bins)
+plotBarrasDiscretizadas(x, num.bins, "EW")
+```
+
+Como era de esperar, conseguimos barras de distintas longitudes. Aunque es posible que con alguna entrada demos con un diagrama que contenga todas las barras de la misma longitud.
+
+Ahora probemos con la estrategia Equal Frecuency. 
+
+```{r}
+cat(num.bins)
+plotBarrasDiscretizadas(x, num.bins, "EF")
+```
+
+Aquí siempre obtenemos barras de misma longitud (o algunos +1). Ya que reparte los individuos de tal manera que en cada intervalo haya un mismo número de elementos.
+
+Por último probaremos la estrategia Jenks Natural Breaks. 
+
+```{r}
+cat(num.bins)
+plotBarrasDiscretizadas(x, num.bins, "JNB")
+```
+
+Conseguimos un diagrama completamente distinto. Es interesante ver cuanto varia el resultado de la discretización al aplicar distintas estrategias en los mismos datos de partida. Aunque sin estos gráficos presuponemos que obtendremos distintos resultados, al verlos nos damos cuenta de que tan grande es la diferencia.
+
+## 7. Objetos para gestionar los datasets
+
+## 8. Lectura y escritura de datasets
+
+Para terminar, se nos proponía implementar funciones de lectura y escritura de datasets. Yo he creado una función que sirve para escribir dataFrames en formato csv, y otra para leer los csv-s creados.
+
+Consideraremos que en el dataFrame podemos tener cuatro tipos de variables:
+
+\begin{itemize}
+  \item \textbf{numeric:} Números reales.
+  \item \textbf{integer:} Números enteros.
+  \item \textbf{character:} Distintos string.
+  \item \textbf{factor:} Valores tipo categóricos. Se considera como categórico cualquier
+atributo que tenga menos de cinco posibles valores.
+\end{itemize}
+
+Primero, analizaremos la función de escritura. A este se le puede pasar un dataFrame que contenga variables de cualquier tipo (`numeric`, `integer`, `character` y `factor`). Una vez tomado este dataFrame, crea un fichero en formato csv utilizando un separador indicado por el usuario (por defecto '\\t'). Da la opción de mantener los nombres de las variables. Si se quieren mantener, antes de todos los datos, escribirá dichos nombres. También da la posibilidad de mantener los nombres de las filas. Probemos como funciona. Primero crearemos un dataFrame.
+
+```{r}
+n <- 10
+df <- data.frame( a = round(runif(n) * 100 ,2),
+                  b = as.character(letters[1:n]),
+                  c = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)),
+                  d = sample(1:100, n),
+                  e = round(runif(n) * 100 ,2),
+                  f = as.factor(sample(c("a", "b", "c"), n, replace = TRUE)))
+row.names(df) <- letters[1:n]
+df
+```
+
+Este dataFrame contiene variables de todos los tipos posibles.
+
+```{r}
+sapply(df, class)
+```
+
+Una vez creado el dataFrame, lo escribiremos en un fichero csv sin mantener los nombres de columnas ni nombres de filas y utilizando el separador '#'. Para ello, utilizaremos la función que he implementado.
+
+```{r}
+writeDataFrame(df, "tabla.csv", header = FALSE, rownames = FALSE, sep = "#")
+```
+
+Esta ejecución nos crea un fichero csv que contiene información de este estilo:
+
+ 6.05#a#a#32#99.93#b\newline
+83.73#b#b#62#71.81#b\newline
+81.23#c#b# 6#59.26#c\newline
+93.17#d#a#98# 1.82#a\newline
+70.44#e#a#61# 3.25#b\newline
+52.01#f#c#82#55.50#b\newline
+70.02#g#b#65#77.37#a\newline
+96.44#h#b#70# 9.52#b\newline
+20.21#i#c#54#16.18#b\newline
+66.15#j#b#80#60.38#c\newline
+
+Como vemos, no se ha guardado información acerca de los nombres de columnas y líneas. 
+
+A parte de la función ya mostrada, he implementado otra que sirve para leer un dataFrame desde un fichero. La utilizaremos para leer el dataFrame que acabamos de guardar.
+
+```{r}
+dfAux <- readDataFrame("tabla.csv", header = FALSE, rownames = FALSE, sep = "#")
+dfAux
+```
+
+Como vemos, los datos que contiene son exactamente iguales a las que contenía el dataFrame original. Por lo que la escritura y lectura han sido correctas.
+
+```{r}
+all(dfAux == df)
+```
+
+Sin embargo, lo más interesante es que los tipos de variable se han mantenido acorde a las definiciones que he dado en un principio.
+
+```{r}
+sapply(dfAux, class)
+```
+
+Ahora, escribiremos el fichero pero con los nombres de columnas y filas incluidos. Además, como separador utilizaremos el caracter \@.
+
+```{r}
+writeDataFrame(df, "tabla.csv", header = TRUE, rownames = TRUE, sep = "@")
+```
+
+Esta ejecución nos crea un fichero csv que contiene información de este estilo:
+
+ROWID\@a\@b\@c\@d\@e\@f\newline
+1\@41.12\@a\@a\@49\@50.24\@c\newline
+2\@52.91\@b\@c\@84\@ 1.16\@b\newline
+3\@47.27\@c\@a\@70\@32.19\@b\newline
+4\@24.46\@d\@c\@87\@10.05\@a\newline
+5\@69.31\@e\@a\@72\@22.68\@b\newline
+6\@56.63\@f\@c\@ 8\@26.25\@a\newline
+7\@68.35\@g\@a\@69\@48.10\@c\newline
+8\@87.66\@h\@c\@43\@90.64\@a\newline
+9\@52.75\@i\@c\@19\@83.65\@a\newline
+10\@34.96\@j\@b\@ 2\@49.53\@a\newline
+
+Como vemos, la primera fila contiene los nombres de todas las columnas. Por otro lado, vemos que hay una nueva columa: \textit{ROWID}. Esta columna sirve para guardar todos los nombres de las filas.
+
+Una vez conseguido este fichero. Vamos a leerlo con nombres de columnas y filas incluidos.
+
+```{r}
+dfAux <- readDataFrame("tabla.csv", header = TRUE, rownames = TRUE, sep = "@")
+dfAux
+```
+
+De nuevo, los datos que contiene son exactamente iguales a las que contenía el dataFrame original. Por lo que la escritura y lectura han sido correctas. Además esta vez hemos mantenido los nombres de las filas y columnas.
+
+```{r}
+all(dfAux == df)
+```
+
+También se han mantenido correctamente los tipos de variables.
+
+```{r}
+sapply(dfAux, class)
+```
+
+Por último, veamos que pasaría si indicáramos que el fichero de entrada no contiene nombres de filas.
+
+```{r}
+dfAux <- readDataFrame("tabla.csv", header = TRUE, rownames = FALSE, sep = "@")
+dfAux
+```
+
+Como se puede apreciar, esa columna que contenia los nombres de las filas se ha tratado como una variable normal. Es decir, si a esta función le decimos que nuestro fichero contiene los nombres de las filas, tomará como nombres los valores de la primera columna. Si no, tomara todas las columnas como variables normales. Con esto he querido imitar el comportamiento de la función original de R.

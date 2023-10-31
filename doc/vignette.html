@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Josu Loidi" />
+
+<meta name="date" content="2023-10-31" />
+
+<title>Documentación de softwarepack</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Documentación de softwarepack</h1>
+<h4 class="author">Josu Loidi</h4>
+<h4 class="date">2023-10-31</h4>
+
+
+
+<div id="resumen" class="section level2">
+<h2>Resumen</h2>
+<p>En este documento se ilustrará el uso de todas las funciones que he implementado en Python. Para cada función se dará una breve explicación de lo que debería hacer la función y se mostrará como lo hace. El documento se ha dividido siguiendo los distintos objetivos que se habían marcado.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;softwarepack&quot;</span>)</span></code></pre></div>
+</div>
+<div id="algoritmos-de-discretización" class="section level2">
+<h2>1. Algoritmos de discretización</h2>
+<p>Empezemos viendo el funcionamiento de los algoritmos de discretización. Los algortimos de discretización toman como entrada un vector de valores numéricos y los transforman en vectores categóricos. Para esto, también toman un número de intervalos. Partiendo de los numeros de entrada y el número de intervalos, deciden cuales son los puntos de corte en el conjunto de datos. Teniendo en cuenta estos ultimos, clasifican cada número en un intervalo distinto.</p>
+<p>Para crear estos intervalos, se utilizan distintas estrategias. Yo debía implementar dos de ellas: Equal Width y Equal Frecuency. En el Equal Width todos los rangos deben tener la misma longitud. Por ejemplo, si tenemos como entrada los puntos (11.5, 10.2, 1.2, 0.5, 5.3, 20.5, 8.4, 4.4) y como numéro de intervalos 4, los puntos de corte serán 5.5, 10.5 y 15.5. Cada intervalo tiene una longitud de 5.</p>
+<p>En cambio, en el Equal Width, se busca que en cada intervalo haya el mismo número de valores. Por tanto, los puntos de corte los definen algunos de los números que se encuentran en la entrada. Siguiendo con el ejemplo, los puntos de corte serían 1.2, 5.3, y 10.2, manteniendo así dos elementos en cada intervalo. Es relativamente sencillo comprenderlo si ordenamos la lista: (0.5, , 4.4, , 8.4, , 11.5, 20.5). En este ejemplo había elementos suficientes como para crear cuatro intervalos con la misma cantidad de números. Pero, si la cantidad de números no es múltiplo del número de intervalos esto no sucede. En estos casos, mi implementación añade más elementos a los primeros intervalos. Por ejemplo, si tenemos un vector de entrada de 10 números, la partición se haria desta manera: (0.5, 1.2, , 5.3, 8.4, , 11.5, , 23.1, 80.1).</p>
+<p>Yo, a parte de estas dos estrategias, he implementado una adicional. Por lo que he leído se llama Jenks Natural Breaks. Con esta estrategia lo que se busca es que los elementos de los distintos intervalos estén lo más separados posibles. Es decir, se busca donde se dan los saltos más grandes en los numeros, y se dividen por esas partes. Volviendo al ejemplo, es sencillo ver donde estan esos saltos si de nuevo ordenamos la lista: 0.5 (+0.7) 1.2  4.4 (+0.9) 5.3  8.4 (+1.8) 10.2 (+1.3) 11.5  20.5. Por lo tanto, teniendo en cuenta esto, los puntos de corte serían 1.2, 5.3 y 11.5.</p>
+<p>Mis funciones, devuelven dos elementos, por un lado un vector categórico. Por otro lado, la lista de los números de corte. Para probar las funciones, utilizaremos el mismo ejemplo que se ha usado en las explicaciones.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">11.5</span>, <span class="fl">10.2</span>, <span class="fl">1.2</span>, <span class="fl">0.5</span>, <span class="fl">5.3</span>, <span class="fl">20.5</span>, <span class="fl">8.4</span>, <span class="fl">4.4</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>num.bins <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
+<p>Primero, vamos a probar la función que utiliza la estrategia Equal Width.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">discretizeEW</span>(x,num.bins)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<pre><code>## $x.discretized
+## [1] 10.5,15.5 5.5,10.5  -Inf,5.5  -Inf,5.5  -Inf,5.5  15.5,Inf  5.5,10.5 
+## [8] -Inf,5.5 
+## Levels: -Inf,5.5 5.5,10.5 10.5,15.5 15.5,Inf
+## 
+## $cut.points
+## [1]  5.5 10.5 15.5</code></pre>
+<p>Como vemos, los puntos de corte coinciden con los mencionados en la explicación. Por otro lado, cada valor se encuentra en su debido intervalo. Podemos contar cuantos números hay en cada intervalo, y nos damos cuenta de que no tiene por qué haber un mismo número de elementos en cada uno.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(res<span class="sc">$</span>x.discretized)</span></code></pre></div>
+<pre><code>## 
+##  -Inf,5.5  5.5,10.5 10.5,15.5  15.5,Inf 
+##         4         2         1         1</code></pre>
+<p>De hecho, puede ocurrir que en algun intervalo no haya ningun elemento. Como podemos ver en el siguiente ejemplo.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.5</span>, <span class="fl">10.2</span>, <span class="fl">1.2</span>, <span class="fl">0.5</span>, <span class="fl">5.3</span>, <span class="fl">20.5</span>, <span class="fl">8.4</span>, <span class="fl">4.4</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">discretizeEW</span>(y,num.bins)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(res<span class="sc">$</span>x.discretized)</span></code></pre></div>
+<pre><code>## 
+##  -Inf,5.5  5.5,10.5 10.5,15.5  15.5,Inf 
+##         4         3         0         1</code></pre>
+<p>Veamos ahora como funciona la función que utiliza la estrategia Equal Frecuency.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">discretizeEF</span>(x,num.bins)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<pre><code>## $x.discretized
+## [1] 10.2,Inf 5.3,10.2 -Inf,1.2 -Inf,1.2 1.2,5.3  10.2,Inf 5.3,10.2 1.2,5.3 
+## Levels: -Inf,1.2 1.2,5.3 5.3,10.2 10.2,Inf
+## 
+## $cut.points
+## [1]  1.2  5.3 10.2</code></pre>
+<p>De nuevo, los puntos de corte coinciden con los mencionados en la explicación. Por otro lado, cada valor se encuentra en su debido intervalo. Podemos contar cuantos números hay en cada intervalo, y nos damos cuenta de que en cada intervalo hay exactamente dos elementos.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(res<span class="sc">$</span>x.discretized)</span></code></pre></div>
+<pre><code>## 
+## -Inf,1.2  1.2,5.3 5.3,10.2 10.2,Inf 
+##        2        2        2        2</code></pre>
+<p>Si añadimos dos números más al vector de entrada, veremos que en los primeros intervalos tendremos un elemento más.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">1.2</span>, <span class="fl">4.4</span>, <span class="fl">5.3</span>, <span class="fl">8.4</span>, <span class="fl">10.2</span>, <span class="fl">11.5</span>, <span class="fl">20.5</span>, <span class="fl">23.1</span>, <span class="fl">80.1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">discretizeEF</span>(y,num.bins)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(res<span class="sc">$</span>x.discretized)</span></code></pre></div>
+<pre><code>## 
+##  -Inf,4.4  4.4,10.2 10.2,20.5  20.5,Inf 
+##         3         3         2         2</code></pre>
+<p>Por último, tenemos la función que aplica el Jenks Natural Breaks.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">discretizeJNB</span>(x,num.bins)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div>
+<pre><code>## $x.discretized
+## [1] 5.3,11.5 5.3,11.5 -Inf,1.2 -Inf,1.2 1.2,5.3  11.5,Inf 5.3,11.5 1.2,5.3 
+## Levels: -Inf,1.2 1.2,5.3 5.3,11.5 11.5,Inf
+## 
+## $cut.points
+## [1]  1.2  5.3 11.5</code></pre>
+<p>Como he mencionado anteriormente, los puntos de corte coinciden con los puntos en los que se dan los mayores saltos: 1.2, 5.3 y 11.5. En este caso, como en EW, también es posible encontrar intervalos con distinta cantidad de individuos.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(res<span class="sc">$</span>x.discretized)</span></code></pre></div>
+<pre><code>## 
+## -Inf,1.2  1.2,5.3 5.3,11.5 11.5,Inf 
+##        2        2        3        1</code></pre>
+<p>Las funciones mostradas hasta ahora, sirven para discretizar un único vector. Pero también he creado una función que discretiza múltiples vectores: discretizarColumnas(df, numBins, discretizacion = “TODAS”). Esta función toma como entrada un dataFrame, y aplica a todas las columnas la discretización mencionada (, ,  o ). Por defecto hace todas las discretizaciones. Hace lo mismo si se le ha pasado un valor erroneo de discretización.</p>
+<p>Para poder probar esta función, definiremos un dataFrame.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n)<span class="sc">*</span><span class="dv">100</span>),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n)<span class="sc">*</span><span class="dv">100</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">z =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n)<span class="sc">*</span><span class="dv">100</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>num.bins <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##     x  y  z
+## 1  61 41 46
+## 2  15 43 78
+## 3  82 24 42
+## 4  30 51 46
+## 5  19 99 50
+## 6   4 27 84
+## 7  20 99  8
+## 8  95 64 14
+## 9  36 68 17
+## 10 98 73 55</code></pre>
+<p>Teniendo este dataFrame, le aplicaremos EW a todas las columnas.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">discretizarColumnas</span>(df,num.bins,<span class="st">&quot;EW&quot;</span>)</span></code></pre></div>
+<pre><code>##           EW         EW      EW
+## 1    51,74.5 -Inf,42.75   27,46
+## 2  -Inf,27.5 42.75,61.5  65,Inf
+## 3   74.5,Inf -Inf,42.75   27,46
+## 4    27.5,51 42.75,61.5   27,46
+## 5  -Inf,27.5  80.25,Inf   46,65
+## 6  -Inf,27.5 -Inf,42.75  65,Inf
+## 7  -Inf,27.5  80.25,Inf -Inf,27
+## 8   74.5,Inf 61.5,80.25 -Inf,27
+## 9    27.5,51 61.5,80.25 -Inf,27
+## 10  74.5,Inf 61.5,80.25   46,65</code></pre>
+<p>También podemos aplicar la estrategia EF.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">discretizarColumnas</span>(df,num.bins,<span class="st">&quot;EF&quot;</span>)</span></code></pre></div>
+<pre><code>##         EF      EF      EF
+## 1    36,82 -Inf,41   17,46
+## 2  -Inf,19   41,64  55,Inf
+## 3    36,82 -Inf,41   17,46
+## 4    19,36   41,64   17,46
+## 5  -Inf,19  73,Inf   46,55
+## 6  -Inf,19 -Inf,41  55,Inf
+## 7    19,36  73,Inf -Inf,17
+## 8   82,Inf   41,64 -Inf,17
+## 9    19,36   64,73 -Inf,17
+## 10  82,Inf   64,73   46,55</code></pre>
+<p>Incluso podemos utilizar la estrategia JNB</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">discretizarColumnas</span>(df,num.bins,<span class="st">&quot;EF&quot;</span>)</span></code></pre></div>
+<pre><code>##         EF      EF      EF
+## 1    36,82 -Inf,41   17,46
+## 2  -Inf,19   41,64  55,Inf
+## 3    36,82 -Inf,41   17,46
+## 4    19,36   41,64   17,46
+## 5  -Inf,19  73,Inf   46,55
+## 6  -Inf,19 -Inf,41  55,Inf
+## 7    19,36  73,Inf -Inf,17
+## 8   82,Inf   41,64 -Inf,17
+## 9    19,36   64,73 -Inf,17
+## 10  82,Inf   64,73   46,55</code></pre>
+<p>Por último, aplicaremos todas las discretizaciones con una única llamada a la función.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">discretizarColumnas</span>(df,num.bins)</span></code></pre></div>
+<pre><code>##    x.x      x.EW    x.EF   x.JNB y.x       y.EW    y.EF   y.JNB z.x    z.EW
+## 1   61   51,74.5   36,82   36,61  41 -Inf,42.75 -Inf,41   27,51  46   27,46
+## 2   15 -Inf,27.5 -Inf,19 -Inf,36  43 42.75,61.5   41,64   27,51  78  65,Inf
+## 3   82  74.5,Inf   36,82   61,82  24 -Inf,42.75 -Inf,41 -Inf,27  42   27,46
+## 4   30   27.5,51   19,36 -Inf,36  51 42.75,61.5   41,64   27,51  46   27,46
+## 5   19 -Inf,27.5 -Inf,19 -Inf,36  99  80.25,Inf  73,Inf  73,Inf  50   46,65
+## 6    4 -Inf,27.5 -Inf,19 -Inf,36  27 -Inf,42.75 -Inf,41 -Inf,27  84  65,Inf
+## 7   20 -Inf,27.5   19,36 -Inf,36  99  80.25,Inf  73,Inf  73,Inf   8 -Inf,27
+## 8   95  74.5,Inf  82,Inf  82,Inf  64 61.5,80.25   41,64   51,73  14 -Inf,27
+## 9   36   27.5,51   19,36 -Inf,36  68 61.5,80.25   64,73   51,73  17 -Inf,27
+## 10  98  74.5,Inf  82,Inf  82,Inf  73 61.5,80.25   64,73   51,73  55   46,65
+##       z.EF  z.JNB
+## 1    17,46  17,55
+## 2   55,Inf 55,Inf
+## 3    17,46  17,55
+## 4    17,46  17,55
+## 5    46,55  17,55
+## 6   55,Inf 55,Inf
+## 7  -Inf,17 -Inf,8
+## 8  -Inf,17   8,17
+## 9  -Inf,17   8,17
+## 10   46,55  17,55</code></pre>
+<p>Como se puede apreciar en esta última ejecución, al aplicar todas las estrategias, se mantiene la variable principal y por cada discretización se añade una columna más.</p>
+</div>
+<div id="cálculo-de-métricas-para-los-atributos-de-un-dataset" class="section level2">
+<h2>2. Cálculo de métricas para los atributos de un dataset</h2>
+<p>En este caso, se pedía una función que tomara como entrada un dataFrame que contuviera variables continuas y discretas. Para las variables continuas, la función debería calcular la varianza y el AUC. Esta segunda métrica implica que las variables continuas vayan acompañadas de una variable booleana. Para las variables discretas, la funcion deberia calcular la entropía. Analizemos una a una estas métricas.</p>
+<p>Como bien conocemos, la formula de la varianza es la siguiente:</p>
+<p>He creado una función que como entrada tome un vector y compute esos calculos. Probemos dicha función:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(n)<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">calculoVarianza</span>(x)</span></code></pre></div>
+<pre><code>## [1] 895.9556</code></pre>
+<p>Como vemos, da el mismo resultado que la funcion var de R.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(n)<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x)</span></code></pre></div>
+<pre><code>## [1] 1227.156</code></pre>
+<p>Por otro lado, tenemos la funcion de la metrica AUC. Toma como entrada un dataFrame con una variable numérica y una booleana. Primero de todo, calcula la curva ROC que le pertenece a la variable. Una vez hecho eso, calcula el area bajo dicha curva. Esta area debe tener un valor del rango [0,1]. A continuación crearemos un dataFrame para probar dicha función.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="dv">20</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##     x     y
+## 1  92 FALSE
+## 2  38  TRUE
+## 3  70 FALSE
+## 4  62  TRUE
+## 5  64  TRUE
+## 6  20  TRUE
+## 7  63  TRUE
+## 8  46 FALSE
+## 9  91 FALSE
+## 10 51 FALSE
+## 11 15 FALSE
+## 12 32  TRUE
+## 13 89 FALSE
+## 14 53  TRUE
+## 15  6  TRUE
+## 16 52  TRUE
+## 17  5  TRUE
+## 18 14 FALSE
+## 19 57  TRUE
+## 20 84  TRUE</code></pre>
+<p>Ahora el cálculo de AUC.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculoAUC</span>(df)</span></code></pre></div>
+<pre><code>## [1] 0.6354167</code></pre>
+<p>Ejecutándolo con distintas entradas obtenemos siempre un valor entre 0 y 1.</p>
+<p>Por último, esta la funcion de la entropia. La fórmula de dicha metrica es la siguiente:</p>
+<p>Sabiendo esto, he implementado una función que hace dichos cálculos. Si tomamos el ejemplo del enunciado (a, a, c, c, c), la entropia debería dar lo siguiente: <span class="math inline">\(-0.4log2(0.4) - 0.6log2(0.6) = 0.971\)</span>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>x.discretized <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">entropy</span>(x.discretized)</span></code></pre></div>
+<pre><code>## [1] 0.9709506</code></pre>
+<p>Como vemos, hace bien el cálculo.</p>
+<p>Por lo tanto, tengo tres funciones que calculan las tres métricas. Pero no olvidemos que el objetivo principal era calcular las tres métricas para un data frame completo. A la función que hace dichos calculos le he llamado calculoMetricas. A este, se le pasa un dataFrame que contiene variables numéricas y discretas. Las variables numericas deben ir acompañadas por una booleana. Si no es así saltará un error. Para cada variable calcula las respectivas metricas. Crearemos un dataFrame para probar la función.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">a =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">b =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">c =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">d =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">e =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">g =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##    a  b     c d e  f     g
+## 1  b 31  TRUE b a 20 FALSE
+## 2  c 33  TRUE a c 32  TRUE
+## 3  a 18  TRUE b b  8 FALSE
+## 4  a 70  TRUE a a 98  TRUE
+## 5  a 88  TRUE a b 55  TRUE
+## 6  a 81 FALSE a c 85  TRUE
+## 7  c 44  TRUE c a 90  TRUE
+## 8  c 62 FALSE b b 71  TRUE
+## 9  a 56 FALSE b b 70  TRUE
+## 10 b 26 FALSE b a 88 FALSE
+## 11 a  1 FALSE a c 78  TRUE
+## 12 a 67  TRUE b b 57 FALSE
+## 13 c 68  TRUE c b 67  TRUE
+## 14 a 50  TRUE b c 99 FALSE
+## 15 b  2  TRUE c c 74 FALSE</code></pre>
+<p>Ahora, veremos la ejecución de la función.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calculoMetricas</span>(df)</span></code></pre></div>
+<pre><code>##        entr         var         AUC        entr        entr         var 
+##   1.4565648 742.9809524   0.4600000   1.5058231   1.5655962 758.6952381 
+##         AUC 
+##   0.4259259</code></pre>
+<p>En el ejemplo tenemos dos variables númericas y tres discretas. Como vemos en la salida de la función, para las numéricas, hemos logrado dos valores. Que son, la varianza y el AUC respectivamente. Para las variables discretas, conseguimos un único valor (la entropía).</p>
+<p>Como he mencionado antes, si a una variable numérica no le pasamos el vector booleano obtendremos un error.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">a =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">b =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">d =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">e =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">g =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculoMetricas</span>(df)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>}, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">conditionMessage</span>(e))</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<pre><code>## [1] &quot;La variable de la columna 2 no contiene su respectiva variable de clase binaria&quot;</code></pre>
+<p>Ocurrirá lo mismo si ponemos una columna booleana sin su variable numérica.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">a =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">c =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">d =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">e =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">g =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tryCatch</span>({</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculoMetricas</span>(df)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>}, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">conditionMessage</span>(e))</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<pre><code>## [1] &quot;La variable binaria de la columna 2 no contiene su respectiva variable numerica&quot;</code></pre>
+</div>
+<div id="normalización-y-estandarización" class="section level2">
+<h2>3. Normalización y estandarización</h2>
+<p>El siguiente apartado consistía en que tenía que implementar funciones de normalización y estandarización de variables, tanto de manera individual como para un dataframe completo. Cabe destacar que las variables deben ser numéricas.</p>
+<p>Normalizar los datos consiste en pasar todos los datos al rango [0,1]. Para conseguir esto, se consiguen el valor mínimo y máximo que toma la variable. Una vez conseguidos, se restan todos los valores por el minimo, y se les divide la diferencia entre el mínimo y el maximo. Es decir, se computan estos calculos:</p>
+<p>De esta manera, se consigue que todos los valores esten entre 1 y 0, siendo 1 el valor máximo y 0 el mínimo. Para calcular esto, tengo la función que le he llamado normalizar.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> <span class="fu">normalizar</span>(x)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>x_norm</span></code></pre></div>
+<pre><code>##  [1] 0.8000000 0.2111111 0.7666667 0.8555556 0.9777778 0.7333333 0.2222222
+##  [8] 0.5555556 0.2666667 0.2777778 0.2888889 0.4333333 0.6888889 0.7111111
+## [15] 0.9111111 0.6444444 0.0000000 0.6777778 1.0000000 0.5000000</code></pre>
+<p>Como vemos, todos los números toman valores de entre 0 y 1. Y como he afirmado anteriormente, el máximo es 1 y el mínimo 0.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Mínimo: &quot;</span>, <span class="fu">min</span>(x_norm))</span></code></pre></div>
+<pre><code>## Mínimo:  0</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Máximo: &quot;</span>, <span class="fu">max</span>(x_norm))</span></code></pre></div>
+<pre><code>## Máximo:  1</code></pre>
+<p>En cambio, al estandarizar los datos, se consigue que los datos tengan media 0 y desviación estandar de 1. Para ello, los valores se restan por la media de los datos y se dividen por la desviación estandar. Es decir:</p>
+<p>La función que hace dichos cálculos es .</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>x_est <span class="ot">&lt;-</span> <span class="fu">estandarizar</span>(x)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>x_est</span></code></pre></div>
+<pre><code>##  [1]  0.77820112 -1.26868024  0.66233991  0.97130314  1.39612757  0.54647870
+##  [7] -1.23005984 -0.07144775 -1.07557823 -1.03695782 -0.99833742 -0.49627218
+## [13]  0.39199709  0.46923790  1.16440515  0.23751548 -2.00246790  0.35337669
+## [19]  1.47336838 -0.26454976</code></pre>
+<p>Para comprobar que se han hecho bien los calculos, visualicemos la media y la desviación estandar de los nuevos datos. Como se ha mencionado anteriormente, dichos valores deben ser 0 y 1 respectivamente.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Media: &quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(x_est),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Media:  0</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Desviación estandar: &quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(x_est),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Desviación estandar:  1</code></pre>
+<p>A parte de estas dos funciones, he implementado otras dos que hacen uso de estas primeras, que sirven para normalizar y estandarizar un dataFrame completo. Dichas funciones, toman como entrada un dataFrame de variables numericas y la normalizan o estandarizan por columnas.</p>
+<p>Para ello, creemos un dataFrame con cuatro variables.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">z =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">t =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n))</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##     x  y  z   t
+## 1  39  5 71  41
+## 2  26 19 78  57
+## 3  16 91 90   9
+## 4  91 26 44 100
+## 5  80 45 39  10
+## 6  84 53 63  86
+## 7  67 40 58  56
+## 8  75 76  7  50
+## 9  83 39 75  91
+## 10 30  1 83  60</code></pre>
+<p>Ahora normalizemos el dataFrame completo.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>dfnorm <span class="ot">&lt;-</span> <span class="fu">normalizarDF</span>(df)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>dfnorm</span></code></pre></div>
+<pre><code>##               x          y         z          t
+##  [1,] 0.3066667 0.04444444 0.7710843 0.35164835
+##  [2,] 0.1333333 0.20000000 0.8554217 0.52747253
+##  [3,] 0.0000000 1.00000000 1.0000000 0.00000000
+##  [4,] 1.0000000 0.27777778 0.4457831 1.00000000
+##  [5,] 0.8533333 0.48888889 0.3855422 0.01098901
+##  [6,] 0.9066667 0.57777778 0.6746988 0.84615385
+##  [7,] 0.6800000 0.43333333 0.6144578 0.51648352
+##  [8,] 0.7866667 0.83333333 0.0000000 0.45054945
+##  [9,] 0.8933333 0.42222222 0.8192771 0.90109890
+## [10,] 0.1866667 0.00000000 0.9156627 0.56043956</code></pre>
+<p>Como es de esperar, en cada columna el máximo es 1 y el mínimo 0.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Mínimos: </span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="fu">apply</span>(dfnorm, <span class="at">MARGIN =</span> <span class="dv">2</span>, min),<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## Mínimos: 
+##  0 0 0 0 2</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Máximos: </span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="fu">apply</span>(dfnorm, <span class="at">MARGIN =</span> <span class="dv">2</span>, max),<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## Máximos: 
+##  1 1 1 1 2</code></pre>
+<p>Ahora estandarizemos el dataFrame completo.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>dfest <span class="ot">&lt;-</span> <span class="fu">estandarizarDF</span>(df)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>dfest</span></code></pre></div>
+<pre><code>##                x           y           z           t
+##  [1,] -0.7123809 -1.19731215  0.40848684 -0.48345192
+##  [2,] -1.1731247 -0.71144635  0.68882095  0.03223013
+##  [3,] -1.5275430  1.78729204  1.16939371 -1.51481603
+##  [4,]  1.1305945 -0.46851345 -0.67280186  1.41812564
+##  [5,]  0.7407343  0.19087585 -0.87304051 -1.48258590
+##  [6,]  0.8825017  0.46851345  0.08810501  0.96690385
+##  [7,]  0.2799905  0.01735235 -0.11213364  0.00000000
+##  [8,]  0.5635252  1.26672155 -2.15456786 -0.19338077
+##  [9,]  0.8470598 -0.01735235  0.56867776  1.12805449
+## [10,] -1.0313574 -1.33613094  0.88905960  0.12892051</code></pre>
+<p>Como es de esperar, en cada columna la media es 0 y la desviación estandar 1.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Medias: </span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="fu">round</span>(<span class="fu">apply</span>(dfest, <span class="at">MARGIN =</span> <span class="dv">2</span>, mean),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Medias: 
+##  0 0 0 0</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Desviaciones estandar: </span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="fu">round</span>(<span class="fu">apply</span>(dfest, <span class="at">MARGIN =</span> <span class="dv">2</span>, sd),<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Desviaciones estandar: 
+##  1 1 1 1</code></pre>
+</div>
+<div id="filtrado-de-variables" class="section level2">
+<h2>4. Filtrado de variables</h2>
+<p>A continuación, se nos planteaba crear una funcion para hacer filtrado de variables en base a las métricas implementadas. Es decir, partiendo de un dataset, obtener uno nuevo donde todas las variables cumplan los requisitos indicados (por ejemplo, una entropía superior a un cierto umbral). La interpretación de este problema es vastante abierta, se puede llegar a distintas conclusiones. Es por ello por lo que voy a explicar bien qué es lo que he querido hacer con mi función.</p>
+<p>Mi función permite filtrar las variables por la varianza, el AUC y la entropia. Por cada métrica se puede crear una condición. Dicha condicion tiene este formato: MÉTRICA OPERADOR X. Donde MÉTRICA puede ser cualquiera de las tres métricas, OPERADOR puede ser menor (<span class="math inline">\(&lt;\)</span>, ), mayor (<span class="math inline">\(&gt;\)</span>, ) o igual (<span class="math inline">\(=\)</span>, ) y X es un valor numérico.</p>
+<p>Como entrada, puede tomar variables númericas y discretas. Las variables numéricas, pueden ir seguidar por una variable booleana, pero no es obligatorio. Eso sí, una variable lógica no puede ir despues de una variable discreta.</p>
+<p>Supongamos que se le pasa a la funcion la condicion Entropia &lt; 0.9. En este caso, en el dataFrame de entrada solo se mirarán las variables discretas. Las otras (numéricas y booleanas) pasarán el filtro. Es decir, se mantendrán en el dataFrame de salida. En cuanto a las variables discretas, se calculará la entropia para cada una de ellas y aquellas que tengan una entropia superior o igual a 0.9 serán descartadas. Por lo tanto en la salida, estarán las variables numéricas y booleanas y las discretas que tengan una entropia menor a 0.9.</p>
+<p>Ahora supongamos que la condición es AUC &lt; 0.5. En este caso, en el dataFrame de entrada solo se mirarán las variables númericas que van acompañadas de una variable booleana. Las variables discretas y las numéricas que no tengan booleana pasarán el filtro. En cuanto a las variables continuas con booleana, se calculara la entropia y aquellas que tengan una entropia superior o igual a 0.5 se descartarán. Se descartará la variable numérica incluso la booleana.</p>
+<p>Por último, supongamos que se da la condición varianza &lt; 200. En este caso, se mirarán todas las variables numéricas. Las discretas pasarán el filtro. Se calculará la varianza para cada variable y aquellas que no superan 200 serán eliminados. En el caso de las variables que contengan la variable booleana, la variable booleana tambien se descartará.</p>
+<p>En el caso de que se pasen más de una condición (una para cada métrica), se ejecutarán todas en cadena.</p>
+<p>Una vez explicado su comportamiento, veamos como funciona en la práctica. Para ello definiremos un dataFrame con tres variables numéricas (dos de ellas con booleana) y tres categóricas.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">50</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a.x =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">a.y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c.x =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c.y =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">e =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">f =</span> <span class="fu">sample</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">100</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##    a.x   a.y b c.x   c.y d e   f
+## 1   11 FALSE b  19 FALSE b a  81
+## 2   52 FALSE c  16 FALSE c a  60
+## 3   95  TRUE d  11 FALSE b b  73
+## 4   95 FALSE b  20 FALSE c a  61
+## 5   46 FALSE a  31  TRUE a b 100
+## 6   67  TRUE d  24  TRUE a b  53
+## 7    8 FALSE a  38 FALSE a b  51
+## 8   16  TRUE d  48  TRUE b b  70
+## 9   18 FALSE d  43 FALSE a a  59
+## 10  91  TRUE b  41 FALSE c a  81
+## 11  21  TRUE a  37 FALSE a a  59
+## 12  91 FALSE b  42  TRUE b b  54
+## 13  84  TRUE d   6 FALSE b b  53
+## 14  63  TRUE b  13  TRUE c a  92
+## 15  56  TRUE b   2 FALSE c b  52
+## 16  37  TRUE a   5 FALSE b b  52
+## 17  98 FALSE d  44 FALSE c b  58
+## 18  71 FALSE d  23  TRUE b a  60
+## 19  28 FALSE b  22 FALSE c b  71
+## 20  93  TRUE c  30 FALSE a a  90</code></pre>
+<p>Empecemos por filtrar las variables discretas por su entropía. Mantendremos las variables que tengan una entropía menor a 1.6.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar</span>(df, <span class="at">ent =</span> <span class="cn">TRUE</span>, <span class="at">entUmbr =</span> <span class="fl">1.6</span>, <span class="at">entOP =</span> <span class="st">&quot;LO&quot;</span>)</span></code></pre></div>
+<pre><code>## Entropias:  NaN NaN 1.85678 NaN NaN 1.581291 0.9927745 NaN</code></pre>
+<pre><code>##    a.x   a.y c.x   c.y d e   f
+## 1   11 FALSE  19 FALSE b a  81
+## 2   52 FALSE  16 FALSE c a  60
+## 3   95  TRUE  11 FALSE b b  73
+## 4   95 FALSE  20 FALSE c a  61
+## 5   46 FALSE  31  TRUE a b 100
+## 6   67  TRUE  24  TRUE a b  53
+## 7    8 FALSE  38 FALSE a b  51
+## 8   16  TRUE  48  TRUE b b  70
+## 9   18 FALSE  43 FALSE a a  59
+## 10  91  TRUE  41 FALSE c a  81
+## 11  21  TRUE  37 FALSE a a  59
+## 12  91 FALSE  42  TRUE b b  54
+## 13  84  TRUE   6 FALSE b b  53
+## 14  63  TRUE  13  TRUE c a  92
+## 15  56  TRUE   2 FALSE c b  52
+## 16  37  TRUE   5 FALSE b b  52
+## 17  98 FALSE  44 FALSE c b  58
+## 18  71 FALSE  23  TRUE b a  60
+## 19  28 FALSE  22 FALSE c b  71
+## 20  93  TRUE  30 FALSE a a  90</code></pre>
+<p>Al ejecutar la función se nos han mostrado las distintas entropias. Como vemos, el único que no cumplía el requisito era la variable <code>b</code>, por lo que se ha quitado. Tambien hay que remarcar, que como se ha dicho, las variables numéricas se han mantenido.</p>
+<p>Ahora filtraremos las variables numéricas por el valor AUC. Tenemos dos variables numéricas con una variable booleana. Por lo tanto solo se mirarán estas dos. Se pedirá que el valor AUC sea mayor a 0.4.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar</span>(df, <span class="at">AUC =</span> <span class="cn">TRUE</span>, <span class="at">AUCUmbr =</span> <span class="fl">0.4</span>, <span class="at">AUCOP =</span> <span class="st">&quot;HI&quot;</span>)</span></code></pre></div>
+<pre><code>## Valores AUC:  0.42 0.42 NaN 0.3452381 0.3452381 NaN NaN NaN</code></pre>
+<pre><code>##    a.x   a.y b d e   f
+## 1   11 FALSE b b a  81
+## 2   52 FALSE c c a  60
+## 3   95  TRUE d b b  73
+## 4   95 FALSE b c a  61
+## 5   46 FALSE a a b 100
+## 6   67  TRUE d a b  53
+## 7    8 FALSE a a b  51
+## 8   16  TRUE d b b  70
+## 9   18 FALSE d a a  59
+## 10  91  TRUE b c a  81
+## 11  21  TRUE a a a  59
+## 12  91 FALSE b b b  54
+## 13  84  TRUE d b b  53
+## 14  63  TRUE b c a  92
+## 15  56  TRUE b c b  52
+## 16  37  TRUE a b b  52
+## 17  98 FALSE d c b  58
+## 18  71 FALSE d b a  60
+## 19  28 FALSE b c b  71
+## 20  93  TRUE c a a  90</code></pre>
+<p>De la misma manera que en la anterior ejecución, se nos han mostrado los valores AUC conseguidos. Vemos claramente que la variable <code>c</code> no cumplía la condición. Por tanto se ha eliminado (incluida la variable booleana). La variable <code>a</code> y todas las demás se han mantenido.</p>
+<p>A continuacion filtraremos las variables numéricas por la varianza. Solo mantendremos las variables numéricas que contengan una varianza menor a 210.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar</span>(df, <span class="at">varianza =</span> <span class="cn">TRUE</span>, <span class="at">varUmbr =</span> <span class="dv">210</span>, <span class="at">varOP =</span> <span class="st">&quot;LO&quot;</span>)</span></code></pre></div>
+<pre><code>## Varianzas:  1033.734 1033.734 NaN 205.6711 205.6711 NaN NaN 226.3684</code></pre>
+<pre><code>##    b c.x   c.y d e
+## 1  b  19 FALSE b a
+## 2  c  16 FALSE c a
+## 3  d  11 FALSE b b
+## 4  b  20 FALSE c a
+## 5  a  31  TRUE a b
+## 6  d  24  TRUE a b
+## 7  a  38 FALSE a b
+## 8  d  48  TRUE b b
+## 9  d  43 FALSE a a
+## 10 b  41 FALSE c a
+## 11 a  37 FALSE a a
+## 12 b  42  TRUE b b
+## 13 d   6 FALSE b b
+## 14 b  13  TRUE c a
+## 15 b   2 FALSE c b
+## 16 a   5 FALSE b b
+## 17 d  44 FALSE c b
+## 18 d  23  TRUE b a
+## 19 b  22 FALSE c b
+## 20 c  30 FALSE a a</code></pre>
+<p>Mirando las varianzas calculadas, vemos que la única variable numérica que cumple la condición deseada es <code>a</code>. Por consiguiente, se han eliminado la variable <code>a</code> y su variable booleana y la variable <code>f</code>.</p>
+<p>Aunque hasta ahora hayamos insertado una única condición en cada llamada a la función. Es posible pasar las tres condiciones a la vez.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar</span>(df, <span class="at">ent =</span> <span class="cn">TRUE</span>, <span class="at">entUmbr =</span> <span class="fl">1.6</span>, <span class="at">entOP =</span> <span class="st">&quot;LO&quot;</span>,</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">AUC =</span> <span class="cn">TRUE</span>, <span class="at">AUCUmbr =</span> <span class="fl">0.4</span>, <span class="at">AUCOP =</span> <span class="st">&quot;HI&quot;</span>,</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">varianza =</span> <span class="cn">TRUE</span>, <span class="at">varUmbr =</span> <span class="dv">210</span>, <span class="at">varOP =</span> <span class="st">&quot;LO&quot;</span>)</span></code></pre></div>
+<pre><code>## Entropias:  NaN NaN 1.85678 NaN NaN 1.581291 0.9927745 NaN 
+## Valores AUC:  0.42 0.42 NaN 0.3452381 0.3452381 NaN NaN NaN 
+## Varianzas:  1033.734 1033.734 NaN 205.6711 205.6711 NaN NaN 226.3684</code></pre>
+<pre><code>##    d e
+## 1  b a
+## 2  c a
+## 3  b b
+## 4  c a
+## 5  a b
+## 6  a b
+## 7  a b
+## 8  b b
+## 9  a a
+## 10 c a
+## 11 a a
+## 12 b b
+## 13 b b
+## 14 c a
+## 15 c b
+## 16 b b
+## 17 c b
+## 18 b a
+## 19 c b
+## 20 a a</code></pre>
+<p>Aplicando los tres filtros, las únicas variables que sobreviven son <code>d</code> y <code>e</code>. Ya que, la primera condición nos quita <code>b</code>, la segunda <code>c</code> y la tercera <code>a</code> y <code>f</code>.</p>
+</div>
+<div id="cálculo-de-la-correlación" class="section level2">
+<h2>5. Cálculo de la correlación</h2>
+<p>En este problema, se nos pedía crear una función que calculara la correlación por pares entre variables de un dataset. En el caso de que las varaibles fueran categóricas en vez de la correlación, se debía calcular la información mutua. La función debía considerar de que tipo era cada variable. Sabiendo esto, me he preguntado si el dataFrame puede tener o no variables de distintos tipos. Es decir, ¿puede tener variables categóricas y númericas?. O, ¿debe tener todas las variables categóricas o todas numéricas?. He supuesto que puede haber distintas. Por lo tanto, ¿qué calculos hago?. Cuando las dos variables son numéricas, calculo la correlación. Cuando las dos son categóricas, calculo la información mutua. Y cuando una es numérica y otra categórica calculo también la información mutua. Aunque sé que esto último no tiene mucho sentido, me parecía más interesante implementar una función que dejara utilizar variables de dos tipos y no limitarme a un único tipo.</p>
+<p>Sabiendo esto, primero de todo, he implementado una funcion que sirve para calcular la correlación y la información mutua. Analicemos primero el cálculo de correlación. Dicha función, en caso de que las dos variables sean numéricas, computa la siguiente formula:</p>
+<p>Aquí muestro una ejecución de dicha función.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="fu">correlacion</span>(x,y)</span></code></pre></div>
+<pre><code>## [1] 0.3992789</code></pre>
+<p>Como se puede observar, devuelve el mismo valor que la función de R.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x,y)</span></code></pre></div>
+<pre><code>## [1] 0.3992789</code></pre>
+<p>En cambio, la formula de la información mutua es la siguiente:</p>
+<p>Donde H(x) es la entropía de x y H(x,y) es la entropía conjunta de las variables x e y. Por lo que esta función utiliza la función  (anteriormente mencionada). Si le llamamos a la función anterior con dos variables discretas, nos calcula la información mutua.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">correlacion</span>(x,y)</span></code></pre></div>
+<pre><code>## [1] 0.1746881</code></pre>
+<p>Una vez conocida esta función analicemos la ejecucion de la función que calcula la correlación para un dataFrame completo. Primero, definiremos un dataFrame que contenga solo variables numéricas.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1000</span>, <span class="dv">1000</span><span class="sc">/</span>n))</span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">correlacionDF</span>(df)</span></code></pre></div>
+<pre><code>##            a          b          c          d
+## a  1.0000000  0.1203314 -0.1907791  0.1203314
+## b  0.1203314  1.0000000 -0.1290087  1.0000000
+## c -0.1907791 -0.1290087  1.0000000 -0.1290087
+## d  0.1203314  1.0000000 -0.1290087  1.0000000</code></pre>
+<p>Se puede observar que devuelve el mismo resultado que la funcion  implementada en R.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df)</span></code></pre></div>
+<pre><code>##            a          b          c          d
+## a  1.0000000  0.1203314 -0.1907791  0.1203314
+## b  0.1203314  1.0000000 -0.1290087  1.0000000
+## c -0.1907791 -0.1290087  1.0000000 -0.1290087
+## d  0.1203314  1.0000000 -0.1290087  1.0000000</code></pre>
+<p>Como salida, obtenemos una matriz (dataFrame) que contiene todas las correlaciones entre variables. Como era de esperar, en la diagonal obtenemos valores iguales a 1. Ya que una variable tiene una correlacion de 1 consigo misma. Todos los valores, se encuentran en [-1,1].</p>
+<p>También podemos utilizar solo variables categóricas.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;h&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;h&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="fu">correlacionDF</span>(df)</span></code></pre></div>
+<pre><code>##            a          b          c          d
+## a 1.97620224 0.05241832 0.07191208 0.04480993
+## b 0.05241832 1.99711199 0.08830337 0.01524501
+## c 0.07191208 0.08830337 1.98907216 0.04840728
+## d 0.04480993 0.01524501 0.04840728 1.97844378</code></pre>
+<p>En este caso, los valores de la diagonal no tienen valor 1. Los valores que vemos ahí son las entropias de las distintas variables.</p>
+<p>Por último, podemos mezclar dos tipos de variables.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;h&quot;</span>), <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="fu">correlacionDF</span>(df)</span></code></pre></div>
+<pre><code>##             a         b           c         d
+## a 1.000000000 1.1906718 0.008143939 1.0114170
+## b 1.190671792 1.9884162 1.095832357 0.1070147
+## c 0.008143939 1.0958324 1.000000000 1.0041264
+## d 1.011416980 0.1070147 1.004126421 1.9767102</code></pre>
+<p>En el caso de las variables numéricas vemos un 1 en la diagonal, ya que se calcula la correlación. En las otras, la entropia, ya que se calcula la información mutua. En todos los valores restantes, vemos un valor de correlación si las dos variables son numéricas y información mutua en caso contrario.</p>
+</div>
+<div id="visualización-de-datos" class="section level2">
+<h2>6. Visualización de datos</h2>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;reshape2&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: package &#39;reshape2&#39; was built under R version 4.1.3</code></pre>
+<p>Para terminar con la entrega básica, tenía que implementar dos funciones de visualización. Uno para la curva ROC y otro para las matrices de correlación e información mutua. A parte de estos dos, yo he implementado dos funciones extra. Uno que hace boxplots, y otro que hace un diagrama de barras. Analicemos el funcionamiento de cada una de ellas.</p>
+<p>Empezaremos con la función que dibuja la curva ROC de una variable numérica. Para esto, la función debe recivir una variable numérica y una booleana. Estos los recive en un dataFrame. Calcula la curva y hace un plot con los puntos de la curva. A continuación se muestra una ejecución.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>), <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotROC</span>(df)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>En el título del gráfico podemos ver el valor AUC de la curva. Si ejecutamos la celda más de una vez vemos que concuerda con la area de la curva. Cuando obtenemos valores más pequeños de AUC la curva se encuentra más abajo y viceversa.</p>
+<p>Por otro lado, tenemos la función que dibuja las matrizes de correlación. La manera más sencilla de representar gráficamente estas matrices son las <code>heatmap</code>-s. En estas se dibuja cada celda con un color. Cuanto mayor sea el valor de una celda, mayor será su intensidad del color. Por tanto, mi función, toma un dataFrame con variables numerícas y/o categoricas, calcula la matriz de correlaciones y informaciones mutua y dibuja un heatmap con ella.</p>
+<p>Aquí tenemos un ejemplo solo con variables numéricas:</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">1000</span>, <span class="dv">1000</span><span class="sc">/</span>n))</span>
+<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCorrelaciones</span>(df)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAACJVBMVEUAAAAAADoAAGYAOpAAZrYTK0MTLEQULUYULkcVL0gWMEoWMUsXMk0XM04YNE8YNVEZNlIZN1QaOFUaOVYbO1gbO1kcPVsdPlwdPl0dP10eQF8eQWAfQmIfQ2QgRGUgRWYhRmghR2kiSWsiSmwjS24kTG8kTXElTnIlT3QmUHUmUXYnUngoVHooVXspVn0pV38qWIAqWYIrWoMsXIUsXYYtXoctX4kuYIouYYwvY44wZI8wZZExZpIxZ5QyaZYyaZcza5k0bJo0bZw1bp41b582caE3cqM3c6Q4dKY4dac5d6k6AAA6ADo6AGY6Ojo6OpA6eKs6eaw6kNs7eq47e688fbE9frM9f7Q+gLY+gbc/g7lAhLtAhbxBhr5Bh79CicFDisNDi8REjcZFjshFj8lGkMtGkc1Hk89IlNBIldJJl9RJmNVKmddLm9lLm9pMndxNTU1NTW5NTY5Nbo5NbqtNjshNnt1Nn99OoeFOouNPo+VQpOZQpuhRp+pSqOtSqu1Tq+9UrPBUrvJVr/RWsPZWsfdmAABmADpmAGZmOpBmZrZmtv9uTU1uTW5uTY5ubqtuq+SOTU2OTW6OTY6Obk2Ojo6OyP+QOgCQOjqQOmaQkDqQkGaQtpCQ27aQ2/+rbk2r5P+2ZgC225C2///Ijk3Ijm7I///bkDrb/7bb/9vb///kq27k////tmb/yI7/25D/29v/5Kv//7b//8j//9v//+T///8pPUyMAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAKNklEQVR4nO2dh5vcRhmHdfbRSyD0XgIJvfdeQiBcDOHovfd2ENNLgIRNyEISk+QWghN7Y5MF4/Xm9tb79zEzmllJo2/1W69HvpH0e5/49qRP2efmfWZGI40+TTInlSQH/QfEDgUBKAhAQQAKAlAQgIIAFASgIAAFASgIcAGCno74M+JhAPgF9XlYCgUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBqgWdP7GbbVBQGQqqErR/bOeGu3ezbQryOH3n/NzObrZNQUX273qQTaxK0N7tD6patJvtoKAirEEG9kGACkHnT/AsxpE0hIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQHaI2iUJMnG/VVHTK4rhYVdHm0RNBscPqMl9SsKgG0ItEXQUPtRhtIPmS4LmvayqjMbJMmm0nHk3uTQA/rHKb3n0CkjaLKlWuJ2dpDatfj1uIqVamBLBOUqx2ywaf5NtnSp9Q+9peuWOsiIHGllm0aq2pUdr2qfCrVU0JFFwca6jOrHZKuvBfXtHqVD2XjoTGrTCVWfxeNLrbAtgrKCjXU35ByYH/r8phuW2Ribk93Y1hQtqHR8GwW5Pmh6i1Bg13ObJqZGAq7adEmQk6D6kLEeDOkmsyjweCNrT/owtZ1vYqXj1xX0VAQqPxQAv2D5H5eNgxad7qLAJpZa0TYmWxv35w4qH99KQWok5EbSuTO4LbDekzYtfdTGfb2+eJpvuaCaoCAABQEoCEBBgK4Ictci016ixwP2YwU6ImicpEPn2aA/H226j1XohqDhxvG0Bk1vPaUrk/1Y5X9tkaDid3lBq2Py0TP6es1+dEjQzTIlQfpazF7QdkvQTTIlQZ2tQX+SKQnqbB/0R5mSoNlgOz2LbXfsLPYHmaIg/a+r46AbZVYvXNsF/V6Gghy/k6Egx29lKMjxGxkKcvxahoIcv5KhIMcvZSjI8QsZCnL8XObi/bRF0I9laha0f2znJyebIehHMvUK0hm9546ebYSgH8qEFKSubx320RCTF54jZkE/kAkpaF56/GzvjrOF7ZgFfV8mrCD3pOhCUINq0PdkAgvy0H1QXlLMgr4rU6+gJp3FviPjwosbiOnjin3zWXqg9YIFecQs6NsyNlqcSNVzPsOqJ/IrBCmx/aUPq8cs6FsyNlqYxNDTPbN/rPzMfUHQ8PB/en3z2HXTBGm+WSAfKUyD6apkxjSrVaK8oGmvrx+nHS9pnDEL+oaMjeYnUs2neTRxtVrUEkFfl7HRfA0aL3qQ1fqhQhMb6SY27W3Lh8Ys6GsyNprvg4aL0q0hyDynnyzxE7Wgr8rYaG4iNW1YuhrN/tml0/xXZFw4HQeZmdW0pY1QdmLbBH1ZZvXCYUHlq/kmCfqSTEhBmJgFfVGGghxfkAkuaJxUjDBjFvR5mdCCRmnuYgPHQZ+TCSzIpu01cST9WRkKcnxGJrCgRXqwfGjMgj4tE1JQs8dBn5IJKQgTs6BPylCQ4xMyoQWZF1s0sol9XCawoNlgezboN7KT/phMYEFazXA7d8+tSMwvFrhepgZBo82l46CYBX1YJrCg+dDYWTbvE7Oga2VCC9K3JodLb7XFLOhDMi6cpWbYKdVacjViFvRBGRvNzaymd+rryVmNWdA1MjaazWrYybB18sXMpFjlpUbMgjQfKJCPZPNidkq1nozDmAVdLWOj2cyqnVJdM2dVt8yGCnq/jI16FWbYX7MGLR1Dxy/ofTKuYMUuZ9hfN2e18jWNUQt6r4yNZjOrdkp1zZzVBnfS75HJlczOrNop1c6Ng94ts3rh2i7oXTKhBVXfD4pZ0DtlAgsC94NiFvQOmcCCGnw/6O0yNQhq6P2gt8kEFtTg+0FvlQktqLn3g94iE1pQNTELerNMSEHT25os6E0yQQX1UHZHzILeKBNSUHopVnU5H7OgN8iEFTQ3t7SXPSUdt6DXywQXVLjMzS9jHLug18nUIGiePUDVJEGvlalBUL4G3bOTX8k4akGvkQkuqNAHnT56tpDXG7OgV8uEFeSfxXQTa8py6q+SyRXNLR2RLk+zRs6q+g7vGuPfJ5sj6JUyNppNpOqpDPPu/wvPWZ3+xb9EVXIas978K2Rc2RaTGGOtadhfN2fVE/SzeWP6IM3LC+QjxWkw9duaOau+oHsKafNRC3qZjI0WJlL1LYs1c1YBMQt6qYyN5mtQlmmxTkpmYwW9RMZGcxOpZpGsDgq6SsZGs4lU66eenNWYBV0p48KLmdXcuzvC56zGLOjFMqsXru2CXiRDQY4rZCjI8UIZCnK8QIaCHM+XoSDH82QoyPFcGQpyPEeGghzPlqEgx7NkKMjxTBkKcjxDhoIcT5OhIMeSNOOL99MWQU+RoSDHk2UoyPEkGRfOZlbrXF8M/vnQIHozAfyCpX/b5TI2ms2s1rrOasyCnihjo9msRq1rHMYsSPOEAvlINi9W6yqZMQu6TMZGs5nVWtdZjVnQ42VslDVo/jgZG2UfNH+sjI1mM6u1rrMas6DHyLhw7m3AHR0HPVpm9cK1XdCjZCjI8UgZCnI8QoaCHA+XoaD6oSAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlQI2vtrMW+egors//1kMWeVgsrs30VBFbHTOzs/paClkf1ju2xiVYK0nL2/5fLCKcjjfzs7N9y9m21TEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEFEgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBgNoE+UtIrkNhebMDgoIAawvyc4F8/DU2y+wfK65fVg4XHtM+INYVVMoF8vHX2Cyhq8e5o2eXf8Gd83NA8aXgYppYIRfIx19js0S1PvPljW5ifi6Qj7/GZom9O5bXnrn1F6Iju0jWbmJ+LpCPv8ZmiZbXoFIukI+/xmYJXfqqI5reB/m5QD7+GptlwFns/IlGn8U6AwUBKAhAQQAKAlAQIKyg2SB9SbP3rma99rT3a26Xfndxcmilt18fAIFr0MgUVK/KsARB0LSndA5XfL3zJSewoLTcFW9DFwSN9aLC+RoVFaH7oKFerFy3sMlWkiTbytW9yaEHVOnd9nX/SszbwfWK74OsaXVGkFmHW7Wwaa9vGtxka9OUPts+fEb3VGqX6bBGtml1pYmZxRh0C3tIl1dZMOuXq09/W/031rXHiFOeVly7+9IT/DQ/dOsNjBO9ZLlpOuaH3T6SWlG70qXNE9Mmk6W9+kETXND48H/1OWzaU3UirSm2idntnKBFqxpGW39qEDS95bh2oPsifX5ygvxtvctpGUU7CJrXMZIefkS3MF36yVZOkNvOd9JKmnMWLeEFjdP+ZKh6nPtMU0r7oMW2Os2nJzZzmlfebF8UaS/EazEABQEoCEBBAAoCUBCAggAUBKAgAAUB/g/o/QJJye5wHQAAAABJRU5ErkJggg==" /><!-- --></p>
+<p>Aquí uno con variables categóricas:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCorrelaciones</span>(df)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Y por último uno con variables numéricas y categóricas:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;h&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCorrelaciones</span>(df)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Estás eran las dos funciones básicas. Pero a parte de ellas, como bien he comentado, he implementado dos extras. El primero de ellos toma una matriz con variables numéricas y hace un boxplot para cada una de ellas. De esta manera, se puede observar como están distribuidas las variables que tenemos guardados en un data frame.</p>
+<p>A continuación se muestra un ejemplo:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">b =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">c =</span> <span class="fu">sample</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">150</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">d =</span> <span class="fu">sample</span>(<span class="dv">100</span><span class="sc">:</span><span class="dv">500</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">e =</span> <span class="fu">sample</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">300</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBoxPlots</span>(df)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Gracias a esta gráfica podemos ver que tenemos variables con unas distribuciones muy distintas.</p>
+<p>La segunda nueva función toma como entrada una variable numérica y la discretiza con el método indicado. Una vez discretizada, hace un diagrama de barras que muestra cuantos valores se encuentran en cada intérvalo. Para probar esta función llamaremos a la funcion tres veces con una misma variable utilizando distintas estrategias de discretización. Veremos que las salidas serán muy distintas.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2000</span>, n)</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>num.bins <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
+<p>Empecemos con la estrategia Equal Width.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(num.bins)</span></code></pre></div>
+<pre><code>## 4</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBarrasDiscretizadas</span>(x, num.bins, <span class="st">&quot;EW&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Como era de esperar, conseguimos barras de distintas longitudes. Aunque es posible que con alguna entrada demos con un diagrama que contenga todas las barras de la misma longitud.</p>
+<p>Ahora probemos con la estrategia Equal Frecuency.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(num.bins)</span></code></pre></div>
+<pre><code>## 4</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBarrasDiscretizadas</span>(x, num.bins, <span class="st">&quot;EF&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Aquí siempre obtenemos barras de misma longitud (o algunos +1). Ya que reparte los individuos de tal manera que en cada intervalo haya un mismo número de elementos.</p>
+<p>Por último probaremos la estrategia Jenks Natural Breaks.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(num.bins)</span></code></pre></div>
+<pre><code>## 4</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotBarrasDiscretizadas</span>(x, num.bins, <span class="st">&quot;JNB&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Conseguimos un diagrama completamente distinto. Es interesante ver cuanto varia el resultado de la discretización al aplicar distintas estrategias en los mismos datos de partida. Aunque sin estos gráficos presuponemos que obtendremos distintos resultados, al verlos nos damos cuenta de que tan grande es la diferencia.</p>
+</div>
+<div id="objetos-para-gestionar-los-datasets" class="section level2">
+<h2>7. Objetos para gestionar los datasets</h2>
+</div>
+<div id="lectura-y-escritura-de-datasets" class="section level2">
+<h2>8. Lectura y escritura de datasets</h2>
+<p>Para terminar, se nos proponía implementar funciones de lectura y escritura de datasets. Yo he creado una función que sirve para escribir dataFrames en formato csv, y otra para leer los csv-s creados.</p>
+<p>Consideraremos que en el dataFrame podemos tener cuatro tipos de variables:</p>
+<p>Primero, analizaremos la función de escritura. A este se le puede pasar un dataFrame que contenga variables de cualquier tipo (<code>numeric</code>, <code>integer</code>, <code>character</code> y <code>factor</code>). Una vez tomado este dataFrame, crea un fichero en formato csv utilizando un separador indicado por el usuario (por defecto ‘\t’). Da la opción de mantener los nombres de las variables. Si se quieren mantener, antes de todos los datos, escribirá dichos nombres. También da la posibilidad de mantener los nombres de las filas. Probemos como funciona. Primero crearemos un dataFrame.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">a =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n) <span class="sc">*</span> <span class="dv">100</span> ,<span class="dv">2</span>),</span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">b =</span> <span class="fu">as.character</span>(letters[<span class="dv">1</span><span class="sc">:</span>n]),</span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">c =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">d =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, n),</span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">e =</span> <span class="fu">round</span>(<span class="fu">runif</span>(n) <span class="sc">*</span> <span class="dv">100</span> ,<span class="dv">2</span>),</span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f =</span> <span class="fu">as.factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(df) <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span>n]</span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##       a b c  d     e f
+## a 42.10 a c 64 95.31 b
+## b 93.43 b b 24 81.36 a
+## c  9.22 c b  7 36.39 c
+## d 49.56 d b 33 57.59 a
+## e 49.59 e b 21 27.55 b
+## f 62.13 f c 59 19.34 b
+## g 82.82 g b 57 11.49 a
+## h  8.75 h c 73 11.86 c
+## i 46.74 i c 91 96.13 b
+## j 34.01 j a 96 24.25 c</code></pre>
+<p>Este dataFrame contiene variables de todos los tipos posibles.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(df, class)</span></code></pre></div>
+<pre><code>##           a           b           c           d           e           f 
+##   &quot;numeric&quot; &quot;character&quot;    &quot;factor&quot;   &quot;integer&quot;   &quot;numeric&quot;    &quot;factor&quot;</code></pre>
+<p>Una vez creado el dataFrame, lo escribiremos en un fichero csv sin mantener los nombres de columnas ni nombres de filas y utilizando el separador ‘#’. Para ello, utilizaremos la función que he implementado.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataFrame</span>(df, <span class="st">&quot;tabla.csv&quot;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;#&quot;</span>)</span></code></pre></div>
+<p>Esta ejecución nos crea un fichero csv que contiene información de este estilo:</p>
+<p>6.05#a#a#32#99.93#b#b#b#62#71.81#b#c#b# 6#59.26#c#d#a#98# 1.82#a#e#a#61# 3.25#b#f#c#82#55.50#b#g#b#65#77.37#a#h#b#70# 9.52#b#i#c#54#16.18#b#j#b#80#60.38#c</p>
+<p>Como vemos, no se ha guardado información acerca de los nombres de columnas y líneas.</p>
+<p>A parte de la función ya mostrada, he implementado otra que sirve para leer un dataFrame desde un fichero. La utilizaremos para leer el dataFrame que acabamos de guardar.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>dfAux <span class="ot">&lt;-</span> <span class="fu">readDataFrame</span>(<span class="st">&quot;tabla.csv&quot;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;#&quot;</span>)</span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>dfAux</span></code></pre></div>
+<pre><code>##       V1 V2 V3 V4    V5 V6
+## 1  42.10  a  c 64 95.31  b
+## 2  93.43  b  b 24 81.36  a
+## 3   9.22  c  b  7 36.39  c
+## 4  49.56  d  b 33 57.59  a
+## 5  49.59  e  b 21 27.55  b
+## 6  62.13  f  c 59 19.34  b
+## 7  82.82  g  b 57 11.49  a
+## 8   8.75  h  c 73 11.86  c
+## 9  46.74  i  c 91 96.13  b
+## 10 34.01  j  a 96 24.25  c</code></pre>
+<p>Como vemos, los datos que contiene son exactamente iguales a las que contenía el dataFrame original. Por lo que la escritura y lectura han sido correctas.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(dfAux <span class="sc">==</span> df)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Sin embargo, lo más interesante es que los tipos de variable se han mantenido acorde a las definiciones que he dado en un principio.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dfAux, class)</span></code></pre></div>
+<pre><code>##          V1          V2          V3          V4          V5          V6 
+##   &quot;numeric&quot; &quot;character&quot;    &quot;factor&quot;   &quot;integer&quot;   &quot;numeric&quot;    &quot;factor&quot;</code></pre>
+<p>Ahora, escribiremos el fichero pero con los nombres de columnas y filas incluidos. Además, como separador utilizaremos el caracter @.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeDataFrame</span>(df, <span class="st">&quot;tabla.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">rownames =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;@&quot;</span>)</span></code></pre></div>
+<p>Esta ejecución nos crea un fichero csv que contiene información de este estilo:</p>
+<p>ROWID@a@b@c@d@e@f@41.12@a@a@49@50.24@c@52.91@b@c@84@ 1.16@b@47.27@c@a@70@32.19@b@24.46@d@c@87@10.05@a@69.31@e@a@72@22.68@b@56.63@f@c@ 8@26.25@a@68.35@g@a@69@48.10@c@87.66@h@c@43@90.64@a@52.75@i@c@19@83.65@a@34.96@j@b@ 2@49.53@a</p>
+<p>Como vemos, la primera fila contiene los nombres de todas las columnas. Por otro lado, vemos que hay una nueva columa: . Esta columna sirve para guardar todos los nombres de las filas.</p>
+<p>Una vez conseguido este fichero. Vamos a leerlo con nombres de columnas y filas incluidos.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>dfAux <span class="ot">&lt;-</span> <span class="fu">readDataFrame</span>(<span class="st">&quot;tabla.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">rownames =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;@&quot;</span>)</span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>dfAux</span></code></pre></div>
+<pre><code>##       a b c  d     e f
+## a 42.10 a c 64 95.31 b
+## b 93.43 b b 24 81.36 a
+## c  9.22 c b  7 36.39 c
+## d 49.56 d b 33 57.59 a
+## e 49.59 e b 21 27.55 b
+## f 62.13 f c 59 19.34 b
+## g 82.82 g b 57 11.49 a
+## h  8.75 h c 73 11.86 c
+## i 46.74 i c 91 96.13 b
+## j 34.01 j a 96 24.25 c</code></pre>
+<p>De nuevo, los datos que contiene son exactamente iguales a las que contenía el dataFrame original. Por lo que la escritura y lectura han sido correctas. Además esta vez hemos mantenido los nombres de las filas y columnas.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(dfAux <span class="sc">==</span> df)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>También se han mantenido correctamente los tipos de variables.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dfAux, class)</span></code></pre></div>
+<pre><code>##           a           b           c           d           e           f 
+##   &quot;numeric&quot; &quot;character&quot;    &quot;factor&quot;   &quot;integer&quot;   &quot;numeric&quot;    &quot;factor&quot;</code></pre>
+<p>Por último, veamos que pasaría si indicáramos que el fichero de entrada no contiene nombres de filas.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a>dfAux <span class="ot">&lt;-</span> <span class="fu">readDataFrame</span>(<span class="st">&quot;tabla.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;@&quot;</span>)</span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>dfAux</span></code></pre></div>
+<pre><code>##    ROWID     a b c  d     e f
+## 1      a 42.10 a c 64 95.31 b
+## 2      b 93.43 b b 24 81.36 a
+## 3      c  9.22 c b  7 36.39 c
+## 4      d 49.56 d b 33 57.59 a
+## 5      e 49.59 e b 21 27.55 b
+## 6      f 62.13 f c 59 19.34 b
+## 7      g 82.82 g b 57 11.49 a
+## 8      h  8.75 h c 73 11.86 c
+## 9      i 46.74 i c 91 96.13 b
+## 10     j 34.01 j a 96 24.25 c</code></pre>
+<p>Como se puede apreciar, esa columna que contenia los nombres de las filas se ha tratado como una variable normal. Es decir, si a esta función le decimos que nuestro fichero contiene los nombres de las filas, tomará como nombres los valores de la primera columna. Si no, tomara todas las columnas como variables normales. Con esto he querido imitar el comportamiento de la función original de R.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

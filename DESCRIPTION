@@ -1,0 +1,28 @@
+Package: softwarepack
+Type: Package
+Version: 0.0.1
+Author: Josu Loidi [aut]
+Maintainer: Josu Loidi <josu.loidi@ikasle.ehu.eus>
+Title: Paquete para la asignatura Software Matemático y Estadístico
+Description: Este paquete contiene funciones que debía implementar para la asignatura Software Matemático y Estadístico.
+Suggests:
+	ggplot2,
+	reshape2,
+	knitr, 
+  rmarkdown
+Collate:
+	01Discretizacion.R
+	02Metricas.R
+	03NormalizacionYEstandarizacion.R
+	04Filtrado.R
+	05Correlacion.R
+	06Visualizacion.R
+	07ObjetosS4.R
+	08LecturaEscrituraData.R
+License: GPL (>= 2)
+Encoding: UTF-8
+BuildVignettes: TRUE
+VignetteBuilder: 
+  knitr, 
+  rmarkdown
+RoxygenNote: 7.2.3
